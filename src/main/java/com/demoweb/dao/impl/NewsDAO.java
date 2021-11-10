@@ -2,6 +2,8 @@ package com.demoweb.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.demoweb.dao.INewsDAO;
 import com.demoweb.mapper.NewsMapper;
 import com.demoweb.model.NewsModel;
@@ -66,7 +68,9 @@ public class NewsDAO extends AbstractDAO<NewsModel> implements INewsDAO {
 	public List<NewsModel> findAll(Pageable pageable) {
 //		String sql = "select * from NEWS limit ?, ?";
 		StringBuilder sql = new StringBuilder("select * from NEWS ");
-		if (pageable.getSorter()!=null) {
+		if (pageable.getSorter()!=null 
+				&& StringUtils.isNotBlank(pageable.getSorter().getSortName()) 
+				&& StringUtils.isNotBlank(pageable.getSorter().getSortBy())) {
 			sql.append("order by " + pageable.getSorter().getSortName() + " " + pageable.getSorter().getSortBy() + " ");
 		}
 		if (pageable.getOffset() != null && pageable.getLimit() != null) {

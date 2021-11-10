@@ -37,8 +37,15 @@
 	<!-- /.sidebar-shortcuts -->
 
 	<ul class="nav nav-list">
-		<li class="active"><a
-			href='<c:url value="/admin-news?page=1&maxPageItem=2&sortName=title&sortBy=DESC"/>'>
+		<li class="active">
+			<c:url var="listURL" value="/admin-news">
+				<c:param name="page" value= "1" />
+				<c:param name="maxPageItem" value="2" />
+				<c:param name="sortName" value="title" />
+				<c:param name="sortBy" value="DESC" />
+				<c:param name="type" value="list" />
+			</c:url> <a
+			href='${listURL}'>
 				<i class="menu-icon fa fa-tachometer"></i> <span class="menu-text">
 					Dashboard </span>
 		</a> <b class="arrow"></b></li>
@@ -51,13 +58,11 @@
 		</a> <b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class="">
-				<a href='<c:url value = "/admin-news"/>' 
+				<li class=""><a href='<c:url value = "/admin-news"/>'
 					class="dropdown-toggle"> <i class="menu-icon fa fa-caret-right"></i>
 
 						Layouts <b class="arrow fa fa-angle-down"></b>
-				</a> 
-				<b class="arrow"></b>
+				</a> <b class="arrow"></b>
 
 					<ul class="submenu">
 						<li class=""><a
@@ -160,8 +165,7 @@
 					</ul></li>
 			</ul></li>
 
-		<li class=""><a
-			href='<c:url value = "/admin-news"/>' 
+		<li class=""><a href='<c:url value = "/admin-news"/>'
 			class="dropdown-toggle"> <i class="menu-icon fa fa-list"></i> <span
 				class="menu-text"> Tables </span> <b class="arrow fa fa-angle-down"></b>
 		</a> <b class="arrow"></b>

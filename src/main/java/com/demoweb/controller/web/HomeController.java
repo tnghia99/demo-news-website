@@ -33,11 +33,9 @@ public class HomeController extends HttpServlet {
 		if (action != null && action.equals("login")) {
 			String message = request.getParameter("message");
 			String alert = request.getParameter("alert");
-			System.out.println(message);
 			if (message != null && alert != null) {
 				request.setAttribute("message", bundle.getString(message));
 				request.setAttribute("alert",alert);
-				System.out.println("not null");
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/views/login.jsp");
 			rd.forward(request, response);
