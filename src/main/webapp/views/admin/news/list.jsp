@@ -1,6 +1,8 @@
 <%@include file="/common/taglib.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<c:url var = "APIurl" value = "/api-admin-news"/>
+<c:url var = "NewsURL" value = "/admin-news"/>
 <!DOCTYPE html>
 <html>
 
@@ -23,6 +25,12 @@
 			<div class="page-content">
 				<div class="row">
 					<div class="col-xs-12">
+					<c:if test="${not empty messageResponse}">
+						<div class="alert alert-${alert}">
+  							${messageResponse}
+						</div>
+					</c:if>
+						
 						<div class="widget-box table-filter">
 							<div class="table-btn-controls">
 								<div class="pull-right tableTools-container">
@@ -30,7 +38,7 @@
 										<a flag="info"
 										   class= "dt-buttons buttons-colvis btn btn-white btn-primary btn-bold"
 										   data-toggle="tooltip"
-										   title='Add new post' href='<c:url value="/admin-news?type-edit"/>'>
+										   title='Add new post' href='<c:url value="/admin-news?type=edit"/>'>
 										   		<span>
 										   			<i class="fa fa-plus-circle bigger-110 purple"></i>
 										   		</span> 
@@ -38,7 +46,7 @@
 										<button id="btnDelete" type="button"
 												class="dt-button button-html5 btn btn-white btn-primary btn-bole" 
 												data-toggle="tooltip"
-												title = 'Delete post' href='<c:url value="/admin-news?type-delete"/>'>
+												title = 'Delete post' href='<c:url value="/admin-news?type=delete"/>'>
 										   		<span>
 										   			<i class="fa fa-trash-o bigger-110 pink"></i>
 										   		</span> 
@@ -55,6 +63,7 @@
 									<table class="table table-bordered">
 										<thead>
 											<tr>
+												<th><input type="checkbox" id="checkAll"></th>
 												<th>Title</th>
 												<th>Content</th>
 												<th>Action</th>
@@ -63,6 +72,7 @@
 										<tbody>
 											<c:forEach var="item" items="${model.listResult}">
 												<tr>
+													<td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}"></td>
 													<td>${item.title}</td>
 													<td>${item.content}</td>
 													<td>
@@ -73,7 +83,7 @@
 														<a class="btn btn-sm btn-primary btn-edit"
 														   data-toggle="tooltip"
 														   title="Update post" 
-														   href='${editURL}'>
+														   href="${editURL}">
 														   		<i class="fa fa-pencil-square-o" area-hiddent="true"></i>
 														</a>
 													</td>
@@ -86,6 +96,7 @@
 									<input type="hidden" value="" id="maxPageItem" name="maxPageItem" />
 									<input type="hidden" value="" id="sortName" name="sortName" />
 									<input type="hidden" value="" id="sortBy" name="sortBy" />
+									<input type="hidden" value="" id="type" name="type" />
 								</div>
 							</div>
 						</div>
@@ -112,12 +123,40 @@
 						$('#maxPageItem').val(limit);
 						$('#sortName').val('title');
 						$('#sortBy').val('DESC');
+						$('#type').val('list');
 						$('#formSubmit').submit();
 					}
 
 				}
 			});
 		});
+		
+		
+		$( "#btnDelete" ).click(function() {
+			var data = {};
+			var ids = $('tbody input[type=checkbox]:checked').map(function(){
+				return $(this).val();
+			}).get();
+			data["ids"] = ids;
+			deletePost(data);
+		});
+		
+		
+		function deletePost(data) {
+			$.ajax({
+				url: '${APIurl}',
+				type: 'DELETE',
+				contentType: 'application/json',
+				data: JSON.stringify(data),
+				success: function (result){
+					window.location.href = "${NewsURL}?page=1&maxPageItem=2&sortName=title&sortBy=DESC&type=list&message=delete_successfully";
+				},
+				error: function (err){
+					window.location.href = "${NewsURL}?page=1&maxPageItem=2&sortName=title&sortBy=DESC&type=list&message=delete_failed";
+				},
+			});
+		}
+		
 	</script>
 </body>
 

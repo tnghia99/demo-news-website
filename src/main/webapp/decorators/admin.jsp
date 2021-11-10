@@ -15,6 +15,7 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="<c:url value='/template/admin/assets/js/ace-extra.min.js'/>"></script>
 		<script src="<c:url value='/template/pagination/jquery.twbsPagination.js'/>"></script>
+		<script src="<c:url value='/ckeditor/ckeditor.js'/>"></script>
 		<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		  -->
